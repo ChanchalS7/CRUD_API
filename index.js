@@ -182,14 +182,14 @@ app.patch("/employees/", (req, res, next) => {
         });
 });
 
-app.delete("/employees/:id", (req, res, next) => {
-    db.run(`DELETE FROM user WHERE id = ?`,
-        req.params.id,
-        function (err, result) {
-            if (err) {
-                res.status(400).json({ "error": res.message })
-                return;
-            }
-            res.status(200).json({ deletedID: this.changes })
-        });
+app.delete('/employees/:id',(req,res)=>{
+    const id=req.params.id;
+    db.run('DELETE FROM employees WHERE id=?', id, function (err,){
+        if(err){
+            console.log(err);
+            return res.status(400).json({error:err.message});
+
+        }
+        res.json({message:'Employee deleted successfully'})
+    });
 });
